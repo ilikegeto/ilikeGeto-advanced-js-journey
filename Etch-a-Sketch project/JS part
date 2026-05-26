@@ -1,0 +1,82 @@
+let color = "black"
+let Ocolor = "black"
+let drawClick = false
+
+function pixelarmy(size) {
+    let board = document.querySelector("#board");
+    let pixel = board.querySelectorAll("div");
+    let boxSize = 500 / size;
+    pixel.forEach((div) => div.remove())
+
+    let sizeze = size ** 2
+    for (i = 0; i<sizeze; i++) {
+        let pixel = document.createElement('div');
+
+        pixel.style.backgroundColor = "white";
+
+        pixel.style.width = `${boxSize}px`;
+        pixel.style.height = `${boxSize}px`;
+        pixel.style.boxSizing = "border-box";
+        pixel.style.border = "1px "
+
+        board.insertAdjacentElement("beforeend", pixel);
+        pixel.addEventListener('mouseover', Outline)
+        pixel.addEventListener('mouseleave', function(){
+            pixel.style.border = "1px "
+        })
+
+        pixel.addEventListener('mouseover', drawColor)
+    }
+}
+pixelarmy(16)
+
+const adpix = document.getElementById("addpix")
+
+adpix.addEventListener("click", function(){
+    let PixInput = document.getElementById("inputPix").value
+    addpixelArmy(PixInput)
+})
+
+function addpixelArmy(amount) {
+    if (amount >= 2 &&  amount <= 100) {
+        pixelarmy(amount)
+    } else {
+        console.warn("i save your divice")
+    }
+} 
+
+function drawColor(){
+    if (drawClick){
+        this.style.backgroundColor = color;
+        this.style.border = "1px solid #000000"
+    }
+}
+
+function swapColor(Ccolor){
+    color = Ccolor;
+    drawClick = !drawClick
+}
+function reset() {
+    let sizeres = document.getElementById('inputPix').value;
+    pixelarmy(sizeres);
+}
+function Outline(){
+    this.style.border = `0.1px, solid`
+    this.style.borderColor = Ocolor;
+}
+function OutlineColor(Oclor){
+    Ocolor = Oclor
+}
+document.querySelector('body').addEventListener('click', function(e){
+    drawClick = !drawClick
+    const canvas = document.querySelector("#board");
+    if (drawClick) {
+        canvas.style.borderColor = "green"
+    } else {
+        canvas.style.borderColor = "red"
+    }
+})
+
+function Rrurel(color){
+    rurel = color;
+}
