@@ -1,0 +1,181 @@
+const container = document.querySelector('.number');
+const display = document.getElementById('display');
+
+let valueArr = []
+
+let Clear = document.createElement('button');
+Clear.textContent = "C";
+container.appendChild(Clear);
+Clear.classList.add('tetot')
+
+let Del = document.createElement('button');
+Del.textContent = "Del";
+container.appendChild(Del);
+Del.classList.add('tetot')
+
+let zeropt2 = document.createElement('button');
+zeropt2.textContent = "00";
+container.appendChild(zeropt2);
+zeropt2.classList.add('tetot')
+
+let zeropt3 = document.createElement('button');
+zeropt3.textContent = "000";
+container.appendChild(zeropt3);
+zeropt3.classList.add('tetot')
+
+
+for (let i = 1; i <= 3; i++) {
+    let button = document.createElement('button');
+    button.textContent = i;
+ 
+    button.classList.add('tetot')
+    button.addEventListener('click', function() {
+        valueArr.push(button.textContent)
+        console.log(valueArr) 
+        display.value = valueArr.join("")
+    });
+
+    container.appendChild(button);
+}
+
+let plus = document.createElement('button');
+plus.textContent = "+";
+plus.classList.add('tetot')
+container.appendChild(plus);
+
+for (let i = 4; i <= 6; i++) {
+    let button = document.createElement('button');
+    button.textContent = i;
+
+    button.classList.add('tetot')
+
+    button.addEventListener('click', function() {
+        valueArr.push(button.textContent)
+        console.log(valueArr)  
+        display.value = valueArr.join("")
+    });
+
+    container.appendChild(button);
+}
+
+let minus = document.createElement('button');
+minus.textContent = "-";
+minus.classList.add('tetot')
+container.appendChild(minus);
+
+for (let i = 7; i <= 9; i++) {
+    let button = document.createElement('button');
+    button.textContent = i;
+
+    button.classList.add('tetot')
+
+    button.addEventListener('click', function() {
+        valueArr.push(button.textContent)
+        console.log(valueArr) 
+        display.value = valueArr.join("")
+    });
+
+    container.appendChild(button);
+}
+
+let multiply = document.createElement('button');
+multiply.textContent = "*";
+container.appendChild(multiply);
+multiply.classList.add('tetot')
+
+let zero = document.createElement('button');
+zero.textContent = "0";
+container.appendChild(zero);
+zero.classList.add('tetot')
+
+let submit = document.createElement('button');
+submit.textContent = "=";
+submit.id = "submit";
+container.appendChild(submit);
+submit.classList.add('tetot')
+
+let divide = document.createElement('button');
+divide.textContent = "/";
+container.appendChild(divide);
+divide.classList.add('tetot')
+
+// function
+const operatorlist = [" + ", " - ", " * ", " / "]
+
+zero.addEventListener('click', function(){
+    valueArr.push(zero.textContent)
+    console.log(valueArr)
+    display.value = valueArr.join("")
+})
+zeropt2.addEventListener('click', function(){
+    valueArr.push(zeropt2.textContent)
+    console.log(valueArr)
+    display.value = valueArr.join("")
+})
+zeropt3.addEventListener('click', function(){
+    valueArr.push(zeropt3.textContent)
+    console.log(valueArr)
+    display.value = valueArr.join("")
+})
+Clear.addEventListener('click', function(){
+    valueArr = []
+    display.value = valueArr
+})
+Del.addEventListener('click', function(){
+    if (display.value != ""){
+        valueArr.pop();
+        console.log(valueArr)
+        display.value = valueArr.join("")
+    }
+})
+
+// operator
+
+function operatorCheck(symbol){
+    let lastChar = valueArr[valueArr.length - 1];
+    let addoperator = " " + symbol + " ";
+
+    if (operatorlist.includes(lastChar)) {
+        console.log("!!{[no operator spam!!]}")
+        valueArr.pop()
+    }
+
+    valueArr.push(addoperator)
+    console.log(valueArr)
+    display.value = valueArr.join("")
+}
+
+plus.addEventListener('click', () =>operatorCheck(plus.textContent))
+minus.addEventListener('click', () =>operatorCheck(minus.textContent))
+multiply.addEventListener('click', () =>operatorCheck(multiply.textContent))
+divide.addEventListener('click', () =>operatorCheck(divide.textContent))
+
+
+submit.addEventListener('click', function(){
+
+    let stringCal = valueArr.join("")
+    let calculation = stringCal.split(" ")
+
+    let input1 = Number(calculation[0])
+    let operatorcal = calculation[1]
+    let input2 = Number(calculation[2])
+
+    console.log(input1)
+    console.log(operatorcal)
+    console.log(input2)
+
+    // result
+    let result = 0
+    if (operatorcal === "+") {
+        result = input1 + input2;
+    } else if(operatorcal === "-") {
+        result = input1 - input2;
+    } else if(operatorcal === "*") {
+        result = input1 * input2;
+    } else if(operatorcal === "/") {
+        result = input1 / input2;
+    }
+
+    display.value = result
+    valueArr = [result.toString()]
+})
